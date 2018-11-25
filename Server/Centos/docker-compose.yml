@@ -1,0 +1,64 @@
+version: "3"
+services:
+    #system:
+    #    working_dir: /
+    #    build: .
+    #    ports:
+    #        - 80:80
+    #        - 8080:8080
+    #    tty: true
+    #apache:
+    #    build:
+    #        context: ./03-Apache/
+    #        dockerfile: Dockerfile-Apache
+    #    working_dir: /
+    #    ports:
+    #        - 8080:8080
+    #    volumes:
+    #        - ./04-Source:/var/www/html/
+    
+    php:
+        build:
+            context: ./01-Php/
+            dockerfile: Dockerfile-Php
+        working_dir: /
+        tty: true
+        networks:
+          - backend
+        volumes:
+            - ./04-Source:/var/www/html/
+    #postgres:
+    #    working_dir: /
+    #    image: postgres:9.5
+    #    restart: always
+    #    ports:
+    #        - 5432:5432
+    #    tty: true
+    #    environment:
+    #        - POSTGRES_DB=db_test
+    #        - POSTGRES_USER=postgres
+    #        - POSTGRES_PASSWORD=123456
+    apache:
+        build:
+            context: ./03-Apache/
+            dockerfile: Dockerfile-Apache
+        working_dir: /var/www/html
+        ports:
+            - 80:80
+        tty: true
+        networks:
+          - frontend
+          - backend
+        volumes:
+            - ./04-Source:/var/www/html/
+        depends_on:
+            - php
+        links:
+            - php
+        #    - postgres
+        
+networks:
+  frontend:
+  backend:
+    
+        

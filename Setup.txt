@@ -1,0 +1,79 @@
+﻿1) Install Docker-Toolbox
+
+2) Create folder contains docker-compose.yml file follow https://devhints.io/docker-compose
+
+3) Open terminal PowerShell at folder of docker-compose.yml
+
+4) Run Docker Quickstart Terminal.
+Machine [default] was created
+Or 
+Create docker machine manual:
+	docker-machine create vm1
+	docker-machine stop vm1
+	
+5) Set folder docker working
+	cmd /c "C:\Program Files\Oracle\VirtualBox\vboxmanage" sharedfolder add vm1 --name  "Server" --hostpath  "C:\Users\QuocMinh\Desktop\Minh\Docker-Setting\Server" --automount
+
+6) Build dooker
+	docker-machine start vm1
+	docker-machine env vm1
+	& docker-machine env vm1 | Invoke-Expression
+	docker-compose up -d
+
+7) To get IP of this machine
+	docker-machine ip vm1
+	ex: return 192.168.99.100
+	Open browser, go to 192.168.99.100:8080 to check.
+
+8) Copy file config to host-machine
+	docker cp 6dd0dbe6039a:/usr/local/apache2/conf/httpd.conf D:\Docker-Setting\Server\Alpine\03-Apache\httpd-base.conf
+	docker cp 6dd0dbe6039a:/usr/local/etc/php/php.ini-development D:\Docker-Setting\Server\Alpine\01-Php\php-base.ini
+
+9) Command:
+	docker-machine ls
+	docker-machine restart
+	docker-machine status
+	docker-machine kill
+	docker-machine version
+	docker exec -it <id> sh
+
+10) Alpine-Linux Command
+	--Login
+	su root
+	--Check version OS
+	cat /etc/os-release
+	uname -r
+11) Change docker-compose.yml
+	docker-coompose build
+	docker-compose up -d
+
+--------------
+Paste And Run
+docker-machine create vm1
+docker-machine stop vm1
+cmd /c "C:\Program Files\Oracle\VirtualBox\vboxmanage" sharedfolder add vm1 --name  "Server" --hostpath  "D:\Docker-Setting\Server\Alpine" --automount
+docker-machine start vm1
+docker-machine env vm1
+& docker-machine env vm1 | Invoke-Expression
+docker-compose up -d
+docker-machine ip vm1
+
+
+----------------------------------------------------------------------------------------------
+Links refer:
+https://docs.docker.com/reference/
+https://docs.docker.com/engine/reference/builder/
+https://docs.docker.com/compose/compose-file/
+
+
+DockerFile:
+FROM: Là base image để chúng ta tiến hành build một image mới. Command này phải được đặt trên cùng của Dockerfile
+MAINTAINER: Command này là tùy chọn, có thể có hoặc không. Nó chưa thông tin của người tiến hành xây dựng lên images.
+RUN: Sử dụng khi muốn thực thi một command trong quá trình build image
+COPY: Copy một file từ host machine tới docker image. Có thể sử dụng URL cho tệp tin cần copy, khi đó docker sẽ tiến hành tải tệp tin đó đến thư mục đích.
+ENV: Định nghĩa các biến môi trường
+CMD: Sử dụng khi muốn thực thi (execute) một command trong quá trình build một container mới từ docker image
+ENTRYPOINT: Định nghĩa những command mặc định, cái mà sẽ được chạy khi container running.
+WORKDIR: Định nghĩa directory cho CMD
+USER: Đặt user hoặc UID cho container được tạo bởi image
+VOLUME: Cho phép truy cập / liên kết thư mục giữa các container và máy chủ (host machine)

@@ -1,0 +1,46 @@
+version: "3.2"
+services:
+    php:
+        build:
+            context: ./Php/
+            dockerfile: Dockerfile-Php
+        networks:
+            backend:
+        volumes:
+            # HOST:DOCKER
+            - ./Source/:/var/www/html/
+        working_dir: /usr/local/etc/php/
+    postgres:
+        image: postgres:9.5
+        restart: always
+        ports:
+            # HOST:DOCKER
+            - 5432:5432
+        networks:
+            backend:
+        environment:
+            - POSTGRES_DB=db_test
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=123456
+        volumes:
+            - ./Postgres/:/docker-entrypoint-initdb.d/
+        working_dir: /
+    apache:
+        build:
+            context: ./Apache/
+            dockerfile: Dockerfile-Apache
+        networks:
+            backend:
+            frontend:
+        ports:
+            # HOST:DOCKER
+            - 8080:80
+        depends_on:
+            - php
+            - postgres
+        working_dir: /usr/local/apache2/
+networks:
+    frontend:
+    backend:
+    
+        
