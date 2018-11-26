@@ -5,7 +5,7 @@ services:
             context: ./Php/
             dockerfile: Dockerfile-Php
         networks:
-            backend:
+            - backend
         volumes:
             # HOST:DOCKER
             - ./Source/:/var/www/html/
@@ -17,7 +17,7 @@ services:
             # HOST:DOCKER
             - 5432:5432
         networks:
-            backend:
+            - backend
         environment:
             - POSTGRES_DB=db_test
             - POSTGRES_USER=postgres
@@ -30,8 +30,8 @@ services:
             context: ./Apache/
             dockerfile: Dockerfile-Apache
         networks:
-            backend:
-            frontend:
+            - backend
+            - frontend
         ports:
             # HOST:DOCKER
             - 8080:80
