@@ -9,13 +9,16 @@ services:
         volumes:
             # HOST:DOCKER
             - ./Source/:/var/www/html/
+        ports:
+            # HOST:DOCKER
+            - "1111:22"
         working_dir: /usr/local/etc/php/
     postgres:
         image: postgres:9.5
         restart: always
         ports:
             # HOST:DOCKER
-            - 5432:5432
+            - "5432:5432"
         networks:
             - backend
         environment:
@@ -34,7 +37,8 @@ services:
             - frontend
         ports:
             # HOST:DOCKER
-            - 8080:80
+            - "80:80"
+            - "2222:22"
         depends_on:
             - php
             - postgres
