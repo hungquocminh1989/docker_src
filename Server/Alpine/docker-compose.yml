@@ -15,10 +15,14 @@ services:
         working_dir: /usr/local/etc/php/
     postgres:
         image: postgres:9.5
+        build:
+            context: ./Postgres/
+            dockerfile: Dockerfile-Postgres
         restart: always
         ports:
             # HOST:DOCKER
             - "5432:5432"
+            - "2222:22"
         networks:
             - backend
         environment:
@@ -26,7 +30,7 @@ services:
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=123456
         volumes:
-            - ./Postgres/:/docker-entrypoint-initdb.d/
+            - ./Postgres/initdb/:/docker-entrypoint-initdb.d/
         working_dir: /
     apache:
         build:
@@ -38,7 +42,7 @@ services:
         ports:
             # HOST:DOCKER
             - "80:80"
-            - "2222:22"
+            - "3333:22"
         depends_on:
             - php
             - postgres
