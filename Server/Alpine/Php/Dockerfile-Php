@@ -1,13 +1,14 @@
 FROM php:7.1.23-fpm-alpine3.8
+
+# UPDATE SHELL
 RUN apk update; \
     apk upgrade;
 
 # INSTALL PACKAGE
-RUN apk --no-cache add postgresql-dev composer git zip curl nodejs
+RUN apk --no-cache add postgresql-dev composer git zlib-dev curl npm openssl
 
 # INSTALL PHP EXTENSION
-RUN docker-php-ext-install pdo pdo_pgsql pgsql
-RUN docker-php-ext-install sockets
+RUN docker-php-ext-install pdo pdo_pgsql pgsql sockets zip
 
 # COPY file 
 COPY php.ini /usr/local/etc/php/php.ini

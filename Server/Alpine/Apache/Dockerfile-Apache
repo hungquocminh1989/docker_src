@@ -1,4 +1,6 @@
 FROM httpd:2.4.33-alpine
+
+# UPDATE SHELL
 RUN apk update; \
     apk upgrade;
 
