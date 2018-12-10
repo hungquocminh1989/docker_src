@@ -12,7 +12,7 @@ services:
         ports:
             # HOST:DOCKER
             - "1111:22"
-        working_dir: /usr/local/etc/php/
+        working_dir: /var/www/html/
     postgres:
         image: postgres:9.5
         build:
@@ -26,7 +26,7 @@ services:
         networks:
             - backend
         environment:
-            - POSTGRES_DB=db_test
+            - POSTGRES_MULTIPLE_DATABASES=db_test,db_test2
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=123456
         volumes:
