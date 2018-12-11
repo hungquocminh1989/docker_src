@@ -9,6 +9,9 @@ services:
         volumes:
             # HOST:DOCKER
             - ./Source/:/var/www/html/
+            # Not mount folder buildtime, ONLY attached to DOCKER
+            - /var/www/html/node_modules
+            - /var/www/html/vendor
         ports:
             # HOST:DOCKER
             - "1111:22"
