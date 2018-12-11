@@ -5,6 +5,7 @@ RUN apk update; \
     apk upgrade;
 
 # INSTALL PACKAGE
+RUN apk --no-cache add libpng-dev
 RUN apk --no-cache add postgresql-dev composer git zlib-dev curl nodejs npm openssl
 
 # INSTALL PHP EXTENSION
