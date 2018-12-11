@@ -5,8 +5,8 @@ RUN apk update; \
     apk upgrade;
 
 # INSTALL PACKAGE
-RUN apk --no-cache add libpng-dev
-RUN apk --no-cache add postgresql-dev composer git zlib-dev curl nodejs npm openssl
+RUN apk add --no-cache --update make gcc g++ libc-dev libpng-dev automake autoconf libtool
+RUN apk add --no-cache --update postgresql-dev composer git zlib-dev curl nodejs npm openssl
 
 # INSTALL PHP EXTENSION
 RUN docker-php-ext-install pdo pdo_pgsql pgsql sockets zip
