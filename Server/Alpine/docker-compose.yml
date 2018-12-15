@@ -8,7 +8,8 @@ services:
             - backend
         volumes:
             # HOST:DOCKER
-            - ./Source/:/var/www/html/
+            #- ./Source/:/var/www/html/
+            - C:\Users\QuocMinh\laravel_src:/var/www/html/
             # Not mount folder buildtime, ONLY attached to DOCKER
             - /var/www/html/node_modules
             - /var/www/html/vendor
@@ -49,7 +50,7 @@ services:
         depends_on:
             - php
             - postgres
-        working_dir: /usr/local/apache2/
+        working_dir: /var/www/html/
 networks:
     frontend:
     backend:
