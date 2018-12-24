@@ -18,7 +18,7 @@ services:
             - "1111:22"
         working_dir: /var/www/html/
     postgres:
-        image: postgres:9.5
+        #image: postgres:9.5
         build:
             context: ./Postgres/
             dockerfile: Dockerfile-Postgres
@@ -35,7 +35,21 @@ services:
             - POSTGRES_PASSWORD=123456
         volumes:
             - ./Postgres/initdb/:/docker-entrypoint-initdb.d/
-        working_dir: /
+    mysql:
+        build:
+            context: ./MySQL/
+            dockerfile: Dockerfile-MySQL
+        restart: always
+        ports:
+            # HOST:DOCKER
+            - "3306:3306"
+        networks:
+            - backend
+        environment:
+            - MYSQL_DATABASE=wordpress
+            - MYSQL_ROOT_PASSWORD=123456
+            #- MYSQL_USER=dev
+            #- MYSQL_PASSWORD=123456
     apache:
         build:
             context: ./Apache/
@@ -46,7 +60,7 @@ services:
         ports:
             # HOST:DOCKER
             - "80:80"
-            - "3333:22"
+            - "4444:22"
         depends_on:
             - php
             - postgres
