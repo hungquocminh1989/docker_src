@@ -1,0 +1,15 @@
+﻿https://vananhtooo.wordpress.com/2017/10/02/selenium-grid-install-va-cac-buoc-de-setup-hub-va-node/
+
+Setup Hub
+1) Install Java
+2) Start Hub
+java -jar selenium-server-standalone-3.141.59.jar -role hub 
+3) Turn off firewall
+
+
+Setup Node
+1) Install Java
+2) Regis Node
+java -jar selenium-server-standalone-3.141.59.jar -role webdriver -hub http://192.168.1.15:4444/grid/register -port 5566
+3) Turn off firewall
+4) Start driver of browser
